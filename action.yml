@@ -1,0 +1,40 @@
+name: 'wap'
+
+author: 'Tim Martin'
+
+description: 'wap build and publish, https://github.com/t-mart/wap'
+
+inputs:
+  release-type:
+    description: "Release type for publish. Can be none|alpha|beta|release"
+    default: "alpha"
+  curseforge-token:
+    description: "Curseforge token to automate upload to Curseforge"
+    default: "token-not-set"
+  config-path:
+    description: "The path to a custom configuration path. Has no effect unless `use-custom-config-path` is non-`false`."
+    default: "./wap.json"
+
+runs:
+  using: "composite"
+  steps:
+    - name: Setup Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: "3.10"
+
+    - name: Install wap
+      shell: bash
+      run: |
+        pipx install wow-addon-packager
+
+    - name: wap build
+      shell: bash
+      run: |
+        wap build --config-path "${{ inputs.config-path }}"
+
+    - name: wap publish
+      if: ${{ inputs.release-type != 'none' }}
+      shell: bash
+      run: |
+        wap package --release-type "${{ inputs.release-type }}" --curseforge-token "${{ inputs.curseforge-token }}" --config-path "${{ inputs.config-path }}"
