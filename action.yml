@@ -38,4 +38,4 @@ runs:
       if: ${{ inputs.release-type != 'none' }}
       shell: bash
       run: |
-        wap package --release-type "${{ inputs.release-type }}" --curseforge-token "${{ inputs.curseforge-token }}" --config-path "${{ inputs.config-path }}"
+        wap publish --release-type "${{ inputs.release-type }}" --curseforge-token "${{ inputs.curseforge-token }}" --config-path "${{ inputs.config-path }}"

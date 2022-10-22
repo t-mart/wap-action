@@ -60,3 +60,12 @@ jobs:
     with:
       - config-path: './custom-wap.json'
   ```
+
+## How it works
+
+This is a composite action that:
+
+- sets up the latest 3.10.x Python
+- pipx installs wap (with that new Python)
+- wap build ...
+- optionally, wap publish
