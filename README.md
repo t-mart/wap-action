@@ -12,7 +12,7 @@ jobs:
     steps:
       # do other steps, and then...
       - name: 'wap'
-        uses: 't-mart/wap-action@v1'
+        uses: 't-mart/wap-action@master'
         with:
           - release-type: 'release'
           - curseforge-token: '${{ secrets.CURSEFORGE_TOKEN }}'
@@ -65,7 +65,7 @@ jobs:
 
 This is a composite action that:
 
-- sets up the latest 3.10.x Python
+- sets up the latest 3.11.x Python
 - pipx installs wap (with that new Python)
-- wap build ...
-- optionally, wap publish
+- `wap build` ...
+- optionally, `wap publish`
