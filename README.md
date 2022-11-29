@@ -1,6 +1,6 @@
 # t-mart/wap-action
 
-Build and optionally publish your WoW addon package with [wap](https://github.com/t-mart/wap)
+Build and optionally publish your WoW addon package with [wap](https://github.com/t-mart/wap).
 
 ## Example
 
