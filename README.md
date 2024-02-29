@@ -65,7 +65,7 @@ jobs:
 
 This is a composite action that:
 
-- sets up the latest 3.11.x Python
+- sets up the latest 3.12.x Python
 - pipx installs wap (with that new Python)
 - `wap build` ...
 - optionally, `wap publish`
