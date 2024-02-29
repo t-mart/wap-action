@@ -12,22 +12,27 @@ inputs:
     description: "Curseforge token to automate upload to Curseforge"
     default: "token-not-set"
   config-path:
-    description: "The path to a custom configuration path. Has no effect unless `use-custom-config-path` is non-`false`."
+    description: "The path to a custom configuration path. Defaults to `./wap.json`."
     default: "./wap.json"
 
 runs:
   using: "composite"
   steps:
     - name: Setup Python
-      uses: actions/setup-python@v4
+      id: setup-python
+      uses: actions/setup-python@v5
       with:
-        python-version: "3.11"
+        python-version: "3.12"
 
     - name: Install wap
       shell: bash
+      env:
+        PYTHON_PATH: ${{ steps.setup-python.outputs.python-path }}
       # pipx will is installed with runner-default python, so need to tell it to use newer python
+      # pipx comes on the runners, but might not necessarily be the same version we just set up
+      # with actions/setup-python. 
       run: |
-        pipx install --python "$(which python)" wow-addon-packager
+        pipx install --python "${PYTHON_PATH}" wow-addon-packager
 
     - name: wap build
       shell: bash
