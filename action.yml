@@ -18,29 +18,16 @@ inputs:
 runs:
   using: "composite"
   steps:
-    - name: Setup Python
-      id: setup-python
-      uses: actions/setup-python@v5
-      with:
-        python-version: "3.12"
-
-    - name: Install wap
-      shell: bash
-      env:
-        PYTHON_PATH: ${{ steps.setup-python.outputs.python-path }}
-      # pipx will is installed with runner-default python, so need to tell it to use newer python
-      # pipx comes on the runners, but might not necessarily be the same version we just set up
-      # with actions/setup-python. 
-      run: |
-        pipx install --python "${PYTHON_PATH}" wow-addon-packager
+    - name: Install uv
+      uses: astral-sh/setup-uv@v5
 
     - name: wap build
       shell: bash
       run: |
-        wap build --config-path "${{ inputs.config-path }}"
+        uvx --from wow-addon-packager wap build --config-path "${{ inputs.config-path }}"
 
     - name: wap publish
       if: ${{ inputs.release-type != 'none' }}
       shell: bash
       run: |
-        wap publish --release-type "${{ inputs.release-type }}" --curseforge-token "${{ inputs.curseforge-token }}" --config-path "${{ inputs.config-path }}"
+        uvx --from wow-addon-packager wap publish --release-type "${{ inputs.release-type }}" --curseforge-token "${{ inputs.curseforge-token }}" --config-path "${{ inputs.config-path }}"
